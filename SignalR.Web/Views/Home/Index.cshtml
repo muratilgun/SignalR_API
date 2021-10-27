@@ -7,7 +7,7 @@
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
 <script type="text/javascript">
     $(document).ready(() => {
-        var connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:44352/MyHub").build();
+        var connection = new signalR.HubConnectionBuilder().configureLogging(signalR.LogLevel.Information).withUrl("https://localhost:44352/MyHub").build();
         $("#conStatus").text(connection.connectionState);
         connection.start().then(() => {
             $("#conStatus").text(connection.connectionState);
@@ -17,7 +17,6 @@
             connection.invoke("SendName", $("#txtName").val()).catch((err) => console.log(err))
         });
         connection.on("ReceiveName", (name) => {
-            console.log(name)
            $("#namesList").append(`<li class="list-group-item"> ${name}</li>`)
         });
     })
