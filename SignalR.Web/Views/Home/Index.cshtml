@@ -8,28 +8,45 @@
 <script type="text/javascript">
     $(document).ready(() => {
         //.configureLogging(signalR.LogLevel.Information)
-        var connection = new signalR.HubConnectionBuilder().withAutomaticReconnect([1000,1000,3000,2000]).withUrl("https://localhost:5001/MyHub").build();
-        $("#conStatus").text(connection.connectionState);
-        connection.start().then(() => {
-            $("#loading").hide();
+        var connection = new signalR.HubConnectionBuilder().withAutomaticReconnect([1000, 1000, 3000, 2000]).withUrl("https://localhost:5001/MyHub").build();
+
+        statusShow();
+        start();
+        //Functions
+        function statusShow(){
             $("#conStatus").text(connection.connectionState);
-        }).catch((err) => { console.log(err) });
-        $("#conStatus").text(connection.connectionState);
+        };
+        function start() {
+            connection.start().then(() => {
+                statusShow();
+                $("#loading").hide();
+
+            }).catch((err) => {
+                console.log(err);
+                setTimeout(() => start(), 2000);
+            });
+        }
+
+
+        statusShow();
+
 
         connection.onreconnecting(err => {
             $("#loading").show();
-            $("#conStatus").text(connection.connectionState);
-            console.log("hata: " + err);
+            statusShow();
+
         });
 
         connection.onreconnected((connectionId) => {
             $("#loading").hide();
-            $("#conStatus").text(connection.connectionState);
+            statusShow();
+
             console.log("connectionId = " + connectionId);
         })
         connection.onclose(() => {
             $("#loading").hide();
-            $("#conStatus").text(connection.connectionState);
+            statusShow();
+            start();
         })
 
         //Clicks
