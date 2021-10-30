@@ -48,6 +48,9 @@
             connection.on("Notify", (countText) => {
                 $("#notify").html(`<div class ="alert alert-success">${countText}</div>`);
             })
+            connection.on("Error", (errorText) => {
+                alert(errorText);
+            });
 
             //Clicks
             $("#btnNameSave").click(() => {
