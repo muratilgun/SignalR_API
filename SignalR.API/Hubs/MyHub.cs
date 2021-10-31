@@ -35,7 +35,6 @@ namespace SignalR.API.Hubs
         {
             await Clients.All.SendAsync("ReceiveNames", Names);
         }
-
         //Groups
         public async Task AddToGroup(string teamName)
         {
@@ -65,13 +64,11 @@ namespace SignalR.API.Hubs
         {
             var team = _context.Teams.Include(x => x.Users).Select(x => new
             {
-                teamName = x.Name,
+                teamId = x.Id,
                 Users =x.Users.ToList()
             });
             await Clients.All.SendAsync("ReceiveNamesByGroup",team);
         }
-
-
         public async override Task OnConnectedAsync()
         {
             ClientCount++;
