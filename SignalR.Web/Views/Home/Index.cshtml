@@ -60,7 +60,16 @@
             connection.on("ReceiveName", (name) => {
                 $("#namesList").append(`<li class="list-group-item"> ${name}</li>`)
             })
-
+            connection.on("ReceiveMessageByGroup", (name, teamId) => {
+                let listName;
+                if (teamId == 1) {
+                    listName = "ATeamList";
+                }
+                else {
+                    listName = "BTeamList";
+                }
+                $(`#${listName}`).append(`<li class="list-group-itme">${name}</li>`)
+            });
 
             //Clicks
             $("#btnNameSave").click(() => {
@@ -69,7 +78,19 @@
             $("#btnNameTeam").click(() => {
                 let name = $("#txtName").val();
                 let teamName = $("input[type=radio]:checked").val();
-                console.log(name + " " + teamName);
+                //console.log(name + " " + teamName);
+                connection.invoke("SendNameByGroup", name, teamName).catch((err) => { console.log(err) });
+            })
+            $("input[type=radio]").change(() => {
+                let value = $(`input[type=radio]:checked`).val();
+                if (value == "Team A") {
+                    connection.invoke("AddToGroup", value);
+                    connection.invoke("RemoveToGroup", "Team B");
+                }
+                else {
+                    connection.invoke("AddToGroup", value);
+                    connection.invoke("RemoveToGroup", "Team A");
+                }
             })
         })
     </script>
