@@ -45,7 +45,6 @@
                 console.log(clientCount);
                 $("#clientCount").text(clientCount);
             })
-
             connection.on("Notify", (countText) => {
                 $("#notify").html(`<div class ="alert alert-success">${countText}</div>`);
             })
@@ -58,14 +57,19 @@
                     $("#namesList").append(`<li class="list-group-item">${item} </li>`);
                 })
             });
+            connection.on("ReceiveName", (name) => {
+                $("#namesList").append(`<li class="list-group-item"> ${name}</li>`)
+            })
+
 
             //Clicks
             $("#btnNameSave").click(() => {
                 connection.invoke("SendName", $("#txtName").val()).catch((err) => console.log(err))
             })
-            /// on methods
-            connection.on("ReceiveName", (name) => {
-                $("#namesList").append(`<li class="list-group-item"> ${name}</li>`)
+            $("#btnNameTeam").click(() => {
+                let name = $("#txtName").val();
+                let teamName = $("input[type=radio]:checked").val();
+                console.log(name + " " + teamName);
             })
         })
     </script>
@@ -77,7 +81,8 @@
         <input class="form-control" type="text" id="txtName" />
         <hr />
         <button class="btn btn-primary" id="btnNameSave">İsim Kaydet</button>
-        <div class="alert alert-info">
+        <button class="btn btn-warning" id="btnNameTeam">İsim Kaydet(Takım)</button>
+        <div class="alert alert-info mt-2">
             <div class="float-left">
                 Bağlantı Durumu:<strong id="conStatus"></strong>
                 <br />Client Saysı:<strong id="clientCount"></strong>
@@ -91,7 +96,29 @@
         </div>
         <div id="notify"></div>
     </div>
+
+</div>
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="TeamGroup" value="Team A" />
+            <label class="form-check-label">A Takımı</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="TeamGroup" value="Team B" />
+            <label class="form-check-label">B Takımı</label>
+        </div>
+    </div>
     <div class="col-md-8 offset-2">
-        <ul class="list-group" id="namesList"></ul>
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-group" id="ATeamList"></ul>
+            </div>
+            <div class="col-md-6">
+                <ul class="list-group" id="BTeamList"></ul>
+
+            </div>
+        </div>
+
     </div>
 </div>
