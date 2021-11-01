@@ -1,0 +1,7 @@
+﻿select tarih,[1],[2],[3],[4],[5] from
+(select [City],[Count],Cast([CovidDate] as date) 
+as tarih From Covids) as covidT
+PIVOT(sum(Count) For City IN ([1],[2],[3],[4],[5]))as PTable
+order by tarih asc
+
+PIVOT TABLE
