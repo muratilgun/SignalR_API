@@ -36,7 +36,7 @@ namespace CovidChart.API.Controllers
                     var newcovid = new Covid 
                     {   City = item, 
                         Count=rnd.Next(100,1000),
-                        CovidDate= DateTime.Now.AddDays(2)
+                        CovidDate= DateTime.Now.AddDays(x)
                     };
                     _service.SaveCovid(newcovid).Wait();
                     System.Threading.Thread.Sleep(2000);
