@@ -22,8 +22,8 @@ namespace CovidChart.API.Controllers
         public async Task<IActionResult> SaveCovid(Covid covid)
         {
             await _service.SaveCovid(covid);
-            IQueryable<Covid> covidList = _service.GetList();
-            return Ok(covidList);
+            //IQueryable<Covid> covidList = _service.GetList();
+            return Ok(_service.GetCovidChartList());
         }
         [HttpGet]
         public IActionResult InitializeCovid()

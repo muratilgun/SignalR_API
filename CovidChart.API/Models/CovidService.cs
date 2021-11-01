@@ -30,10 +30,10 @@ namespace CovidChart.API.Models
         {
             await _context.Covids.AddAsync(covid);
             await _context.SaveChangesAsync();
-            await _hubContext.Clients.All.SendAsync("ReceiveCovidList", "");
+            await _hubContext.Clients.All.SendAsync("ReceiveCovidList", GetCovidChartList());
         }
 
-        public List<CovidChart> GetCovidList()
+        public List<CovidChart> GetCovidChartList()
         {
             List<CovidChart> covidCharts = new List<CovidChart>();
             using (var command = _context.Database.GetDbConnection().CreateCommand())
