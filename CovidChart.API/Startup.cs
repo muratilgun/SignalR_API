@@ -61,8 +61,8 @@ namespace CovidChart.API
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<CovidHub>("/CovidHub");
                 endpoints.MapControllers();
+                endpoints.MapHub<CovidHub>("/CovidHub");
             });
         }
     }

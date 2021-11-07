@@ -13,7 +13,6 @@ namespace CovidChart.API.Controllers
     public class CovidsController : ControllerBase
     {
         private readonly CovidService _service;
-
         public CovidsController(CovidService service)
         {
             _service = service;
