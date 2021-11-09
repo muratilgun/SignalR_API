@@ -32,7 +32,7 @@ namespace CovidChart.API
             services.AddScoped<CovidService>();
             services.AddCors(options => {
                 options.AddPolicy("CorsPolicy", builder => {
-                    builder.WithOrigins("https://localhost:44357").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+                    builder.WithOrigins("https://localhost:44357", "http://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
                 });
             });
             services.AddDbContext<AppDbContext>(options =>
